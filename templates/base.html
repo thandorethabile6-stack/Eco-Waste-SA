@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/leaf-16.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <title>EcoWaste SA - Community Waste Management</title>
+</head>
+
+<body onload="getLocation()">
+    <nav>
+        <div class="box">
+            <div class="logo-section">
+                <div class="logo">hhhhh</div>
+                <span>
+                    <h1>EcoWaste SA</h1>
+                </span>
+            </div>
+            <ul>
+                <li class="nav-link active">
+                    <a href="/">
+                        <img src="{{ url_for('static', filename='images/add-btn.svg') }}" alt="Recent reports" width="16px" height="16px"> Report Waste    
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="/posts"> 
+                        <img src="{{ url_for('static', filename='images/leaf-btn.svg') }}" alt="Recent reports"
+                            width="16px" height="16px">
+                        Recent Reports
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="/analytics">
+                        <img src="{{ url_for('static', filename='images/analytics-btn.svg') }}" alt="analytics"
+                            width="16px" height="16px">
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="/map">
+                        <img src="{{ url_for('static', filename='images/location-btn.svg') }}" alt="location"
+                            width="16px" height="16px">
+                        Waste Map
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="/learn">
+                        <img src="{{ url_for('static', filename='images/learn-btn.svg') }}" alt="learn" width="16px"
+                            height="16px"> Learn</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        {% block main %}
+
+        {% endblock %}
+    </main>
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <ul class="flashed-messages">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}
+            <button onclick="this.parentElement.display='none';">&times;</button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <script src="{{ url_for('static', filename='scripts/app.js') }}"></script>
+    {% block scripts %}
+        
+    {% endblock %}
+</body>
+
+</html>

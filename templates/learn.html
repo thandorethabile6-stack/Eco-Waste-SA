@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="learn-container">
+    <header class="head">
+        <h1>Waste Management in South Africa</h1>
+        <p>A short course on recycling and climate impacts</p>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="progress-text" id="progressText">Section 1 of 5</div>
+
+    <div class="course-content">
+        <!-- Introduction Section -->
+        <div class="section activate" id="section1">
+            <h2>Introduction to Waste Management</h2>
+            <p>Welcome to this course on waste management in South Africa! Proper waste management is crucial for
+                protecting our environment and public health.</p>
+
+            <div class="facts">
+                <p>South Africa generates approximately <strong>54 million tonnes</strong> of general waste each year,
+                    with only about <strong>10%</strong> being recycled.</p>
+            </div>
+
+            <p>In this course, you'll learn about:</p>
+            <ul>
+                <li>The current state of waste management in South Africa</li>
+                <li>Recycling practices and how to improve them</li>
+                <li>The connection between waste and climate change</li>
+                <li>What you can do to make a difference</li>
+            </ul>
+        </div>
+
+        <!-- Waste Management in SA Section -->
+        <div class="section" id="section2">
+            <h2>Waste Management in South Africa</h2>
+            <p>South Africa faces significant challenges in waste management. With rapid urbanization and population
+                growth, waste generation continues to increase.</p>
+
+            <div class="facts">
+                <p>About 90% of South Africa's waste ends up in landfills, with only 10% being recycled or reused.</p>
+            </div>
+
+            <p>Key issues include:</p>
+            <ul>
+                <li>Inadequate waste collection services in informal settlements</li>
+                <li>Limited landfill space, with many sites approaching capacity</li>
+                <li>Illegal dumping, which poses health and environmental risks</li>
+                <li>Limited awareness about proper waste disposal practices</li>
+            </ul>
+
+            <p>The South African government has implemented the National Waste Management Strategy to address these
+                challenges, but individual action is also crucial.</p>
+        </div>
+
+        <!-- Recycling Section -->
+        <div class="section" id="section3">
+            <h2>Recycling in South Africa</h2>
+            <p>Recycling plays a vital role in reducing the amount of waste sent to landfills and conserving natural
+                resources.</p>
+
+            <div class="facts">
+                <p>South Africa's recycling industry creates over 100,000 jobs, showing how waste management can
+                    contribute to economic development.</p>
+            </div>
+
+            <p>Commonly recycled materials in South Africa include:</p>
+            <ul>
+                <li><strong>Paper and cardboard:</strong> About 70% of recoverable paper is recycled</li>
+                <li><strong>Plastics:</strong> PET plastic bottles have a recycling rate of about 65%</li>
+                <li><strong>Glass:</strong> Approximately 42% of glass packaging is recycled</li>
+                <li><strong>Metals:</strong> Around 80% of beverage cans are recycled</li>
+            </ul>
+
+            <p>To improve recycling rates, many municipalities have implemented separation-at-source programs where
+                households separate recyclables from other waste.</p>
+        </div>
+
+        <!-- Climate Impacts Section -->
+        <div class="section" id="section4">
+            <h2>Climate Impacts of Waste</h2>
+            <p>Waste management has significant implications for climate change, primarily through greenhouse gas
+                emissions.</p>
+
+            <div class="facts">
+                <p>Landfills are the third largest source of methane emissions in South Africa, a greenhouse gas 25
+                    times more potent than carbon dioxide.</p>
+            </div>
+
+            <p>Key connections between waste and climate change:</p>
+            <ul>
+                <li>Organic waste in landfills produces methane as it decomposes</li>
+                <li>Transporting waste to landfills consumes fuel and generates emissions</li>
+                <li>Manufacturing products from recycled materials typically uses less energy than virgin materials</li>
+                <li>Reducing waste prevents emissions associated with extraction, manufacturing, and disposal</li>
+            </ul>
+
+            <p>By improving waste management practices, South Africa can significantly reduce its greenhouse gas
+                emissions.</p>
+        </div>
+
+        <!-- Taking Action Section -->
+        <div class="section" id="section5">
+            <h2>Taking Action: What You Can Do</h2>
+            <p>Everyone has a role to play in improving waste management and reducing climate impacts. Here's what you
+                can do:</p>
+
+            <div class="facts">
+                <p>If every South African household recycled just one plastic bottle per day, we could divert over 18
+                    billion bottles from landfills each year!</p>
+            </div>
+
+            <p><strong>Reduce:</strong> Choose products with less packaging, avoid single-use items, and buy only what
+                you need.</p>
+
+            <p><strong>Reuse:</strong> Find new uses for items instead of throwing them away. Donate usable goods to
+                others.</p>
+
+            <p><strong>Recycle:</strong> Separate your recyclables and use local recycling programs. Know what can be
+                recycled in your area.</p>
+
+            <p><strong>Compost:</strong> Turn food scraps and garden waste into nutrient-rich compost for your plants.
+            </p>
+
+            <p><strong>Advocate:</strong> Support policies and businesses that promote sustainable waste management
+                practices.</p>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="btn-container">
+            <button class="prev-btn" id="prevBtn">Previous</button>
+            <button class="next-btn" id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <!-- Completion Badge -->
+    <div class="badge-container" id="badgeContainer">
+        <div class="badge">🏆</div>
+        <div class="badge-text">Congratulations! You've completed the course!</div>
+        <p>You now understand the importance of waste management and recycling in South Africa and their climate
+            impacts.</p>
+        <button class="share-btn" id="shareBtn">Share Your Achievement</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sections = document.querySelectorAll('.section');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const badgeContainer = document.getElementById('badgeContainer');
+        const shareBtn = document.getElementById('shareBtn');
+
+        let currentSection = 0;
+
+        // Update progress
+        function updateProgress() {
+            const progress = ((currentSection + 1) / sections.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `Section ${currentSection + 1} of ${sections.length}`;
+
+            // Show/hide buttons based on current section
+            prevBtn.style.display = currentSection === 0 ? 'none' : 'block';
+
+            if (currentSection === sections.length - 1) {
+                nextBtn.textContent = 'Finish';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+        }
+
+        // Navigate to next section
+        nextBtn.addEventListener('click', function () {
+            if (currentSection < sections.length - 1) {
+                sections[currentSection].classList.remove('activate');
+                currentSection++;
+                sections[currentSection].classList.add('activate');
+                updateProgress();
+            } else {
+                // Course completed
+                document.querySelector('.course-content').style.display = 'none';
+                badgeContainer.style.display = 'block';
+                progressText.textContent = 'Course Completed!';
+                progressBar.style.width = '100%';
+            }
+        });
+
+        // Navigate to previous section
+        prevBtn.addEventListener('click', function () {
+            if (currentSection > 0) {
+                sections[currentSection].classList.remove('activate');
+                currentSection--;
+                sections[currentSection].classList.add('activate');
+                updateProgress();
+            }
+        });
+
+        // Share button functionality
+        shareBtn.addEventListener('click', function () {
+            alert('Congratulations on completing the course! Share your achievement on social media to encourage others to learn about waste management in South Africa. #WasteManagementSA #RecyclingSouthAfrica');
+        });
+
+        // Initialize progress
+        updateProgress();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="dashboard">
+    <header>
+        <h1>Track the environmental impact of our waste management efforts</h1>
+        <p class="subtitle">Real-time metrics showing our progress in waste reduction and recycling</p>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-title">Reported Cases</div>
+            <div class="stat-value">{{stats['reported']}}</div>
+            <div class="stat-change positive">
+                <span>+{{stats['reported'] - 0.5*stats['reported']/10000}}%</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Collected</div>
+            <div class="stat-value">{{stats['collected']}}</div>
+            <div class="stat-change positive">
+                <span>+{{stats['collected'] - 0.5*stats['collected']/10000}}%</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Recycled</div>
+            <div class="stat-value">{{stats['recycled']}}</div>
+            <div class="stat-change positive">
+                <span>+{{stats['recycled'] - 0.5*stats['recycled']/10000}}%</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">CO2e Saved</div>
+            <div class="stat-value">{{stats['co2']}} kg</div>
+            <div class="stat-change positive">
+                <span>+{{stats['co2'] - 0.5*stats['co2']/10000}}%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-card">
+            <div class="chart-header">
+                <div>
+                    <div class="chart-title">CO2e Impact Over Time</div>
+                    <div class="chart-subtitle">Carbon emissions prevented through waste collection (kg CO2e)</div>
+                </div>
+            </div>
+            <canvas id="co2Chart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <div>
+                    <div class="chart-title">Waste Composition</div>
+                    <div class="chart-subtitle">Breakdown of collected waste types by percentage</div>
+                </div>
+            </div>
+            <canvas id="wasteChart"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // CO2 Impact Chart
+        const co2Ctx = document.getElementById('co2Chart').getContext('2d');
+        new Chart(co2Ctx, {
+            type: 'line',
+            data: {
+                labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'CO2e Saved (kg)',
+                    data: [{{stats['aug']}}, {{stats['sep']}}, {{stats['oct']}}, {{stats['nov']}}, {{stats['dec']}}],
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#3498db',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 400,
+                        ticks: {
+                            stepSize: 85
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Waste Composition Chart
+        const wasteCtx = document.getElementById('wasteChart').getContext('2d');
+        new Chart(wasteCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Plastic', 'Paper', 'Organic', 'Glass', 'Metal'],
+                datasets: [{
+                    data: [{{stats['plastic']}}, {{stats['paper']}}, {{stats['organic']}}, {{stats['glass']}}, {{stats['metal']}}],
+                    backgroundColor: [
+                        '#3498db',
+                        '#2ecc71',
+                        '#f39c12',
+                        '#e74c3c',
+                        '#9b59b6'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}

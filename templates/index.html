@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block main %}
+<div class="report-dialog">
+  <div class="title">
+    <h3>Report Waste</h3>
+    <p>Help keep South Africa clean by reporting waste in your community</p>
+  </div>
+  <div class="form-group">
+    <form action="/report" method="post" enctype="multipart/form-data">
+        <div class="input-group">
+            <label for="description">Description</label>
+            <textarea name="description"  rows="4" placeholder="Describe the waste you found (type e.g. plastic, organic, furniture ...)" required></textarea>
+        </div>
+        <div class="input-group">
+            <label for="type">Type</label>
+            <div class="type">
+                <select name="type">
+                  <option value="Plastic">Plastic</option>
+                  <option value="Paper">Paper</option>
+                  <option value="Glass">Glass</option>
+                  <option value="Organic">Organic</option>
+                  <option value="Metal">Metal</option>
+                  <option value="Other">Other</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-group">
+            <label for="location">Location</label>
+            <div class="location">
+                <input type="text" name="location" placeholder="Enter address or coordinates" required>
+                <button>GPS</button>
+            </div>
+        </div>
+        <div class="input-group">
+            <label for="photo">Photo</label>
+            <div class="photo">
+                <input type="file" name="image" required>
+            </div>
+        </div>
+        <input type="text" name="geoAvail" id="geo_avail" hidden>
+        <input type="text" name="geoEnabled" id="geo_enabled" hidden>
+        <input type="text" name="lat" id="latitude_x" hidden>
+        <input type="text" name="long" id="longitude_y" hidden>
+        <button class="submit-btn" type="submit">Submit Report</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
